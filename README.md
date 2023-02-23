@@ -18,7 +18,7 @@
 + Mongoose
 
 
-IP  51.250.102.118
+IP  84.201.162.54
 Frontend  https://diploma.gerasimova.nomoredomains.work
 Backend  https://api.diploma.gerasimova.nomoredomains.work
 
