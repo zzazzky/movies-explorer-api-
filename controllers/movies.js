@@ -8,54 +8,28 @@ const getMovies = (req, res, next) => {
   Movie.find({ owner: user })
     .populate('owner')
     .orFail(new NotFoundError('Кажется, у вас нет добавленных фильмов'))
-    .populate('owner')
     .then((movies) => { res.send({ movies }); })
     .catch(next);
 };
 
 const createMovie = (req, res, next) => {
-  const { user } = req;
-  const {
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailerLink,
-    thumbnail,
-    movieId,
-    nameRU,
-    nameEN,
-  } = req.body;
-
-  Movie.create({
-    country,
-    director,
-    duration,
-    year,
-    description,
-    image,
-    trailerLink,
-    thumbnail,
-    owner: user,
-    movieId,
-    nameRU,
-    nameEN,
-  })
-    .then((createdMovie) => {
-      Movie.findById(createdMovie._id)
-        .populate('owner')
-        .then((movie) => {
-          res.send({ movie });
+  Movie.findOne({ ...req.body, owner: req.user._id })
+    .then((film) => {
+      if (film) {
+        return Promise.reject(new ConflictError('Этот фильм уже есть в вашей коллекции'));
+      }
+      return Movie.create({ ...req.body, owner: req.user._id })
+        .then((createdMovie) => {
+          Movie.findById(createdMovie._id)
+            .populate('owner')
+            .then((movie) => {
+              res.send({ movie });
+            })
+            .catch(next);
         })
         .catch(next);
     })
-    .catch((err) => {
-      if (err.code === 11000) {
-        next(new ConflictError('Этот фильм уже есть в вашей коллекции'));
-      } else (next(err));
-    });
+    .catch(next);
 };
 
 const deleteMovie = (req, res, next) => {

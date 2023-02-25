@@ -23,7 +23,11 @@ const updateUserInfo = (req, res, next) => {
   })
     .orFail(new NotFoundError('Пользователь не найден'))
     .then((user) => { res.send(user); })
-    .catch(next);
+    .catch((err) => {
+      if (err.code === 11000) {
+        next(new ConflictError('Пользователь с таким e-mail уже существует'));
+      } else (next(err));
+    });
 };
 
 const createUser = (req, res, next) => {
