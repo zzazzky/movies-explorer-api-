@@ -70,6 +70,7 @@ const login = (req, res, next) => {
             httpOnly: true,
             sameSite: 'none',
             secure: true,
+            domain: 'localhost',
           }).send({ message: 'Авторизация успешна!' });
         })
         .catch(next);
@@ -78,7 +79,12 @@ const login = (req, res, next) => {
 };
 
 const logout = (req, res) => {
-  res.clearCookie('token', { httpOnly: true, sameSite: 'none', secure: true }).send({ message: 'Вы успешно вышли из аккаунта, мы будем ждать вашего возвращения!' });
+  res.clearCookie('token', {
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true,
+    domain: 'localhost',
+  }).send({ message: 'Вы успешно вышли из аккаунта, мы будем ждать вашего возвращения!' });
 };
 
 module.exports = {
