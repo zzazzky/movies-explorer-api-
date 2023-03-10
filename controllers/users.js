@@ -70,7 +70,7 @@ const login = (req, res, next) => {
             httpOnly: true,
             sameSite: 'none',
             secure: true,
-            domain: 'localhost',
+            domain: '.diploma.gerasimova.nomoredomains.work',
           }).send({ message: 'Авторизация успешна!' });
         })
         .catch(next);
