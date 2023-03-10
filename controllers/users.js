@@ -70,13 +70,13 @@ const login = (req, res, next) => {
             httpOnly: true,
             sameSite: 'none',
             secure: true,
-            domain: '.diploma.gerasimova.nomoredomains.work',
+            domain: 'localhost',
           })
             .cookie('authorized', true, {
               maxAge: 3600000 * 24 * 7,
               sameSite: 'none',
               secure: true,
-              domain: '.diploma.gerasimova.nomoredomains.work',
+              domain: 'localhost',
             })
             .send({ message: 'Авторизация успешна!' });
         })
