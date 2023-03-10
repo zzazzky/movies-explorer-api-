@@ -65,7 +65,12 @@ const login = (req, res, next) => {
             return Promise.reject(new UnauthorizedError('Неправильный e-mail или пароль'));
           }
           const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
-          return res.cookie('token', token, { maxAge: 3600000 * 24 * 7, httpOnly: true }).send({ message: 'Авторизация успешна!' });
+          return res.cookie('token', token, {
+            maxAge: 3600000 * 24 * 7,
+            httpOnly: true,
+            sameSite: 'none',
+            secure: true,
+          }).send({ message: 'Авторизация успешна!' });
         })
         .catch(next);
     })
@@ -73,7 +78,7 @@ const login = (req, res, next) => {
 };
 
 const logout = (req, res) => {
-  res.clearCookie('token', { httpOnly: true }).send({ message: 'Вы успешно вышли из аккаунта, мы будем ждать вашего возвращения!' });
+  res.clearCookie('token', { httpOnly: true, sameSite: 'none', secure: true }).send({ message: 'Вы успешно вышли из аккаунта, мы будем ждать вашего возвращения!' });
 };
 
 module.exports = {
