@@ -1,6 +1,6 @@
 const allowdedCors = [
-  'https://diploma.gerasimova.nomoredomainsclub.ru',
-  'http://diploma.gerasimova.nomoredomainsclub.ru',
+  'https://diploma.gerasimova.nomoredomains.work',
+  'http://diploma.gerasimova.nomoredomains.work',
   'http://localhost:3000',
 ];
 
