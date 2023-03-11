@@ -70,12 +70,14 @@ const login = (req, res, next) => {
             httpOnly: true,
             sameSite: 'none',
             secure: true,
+            domain: 'localhost',
             path: '/',
           })
             .cookie('authorized', true, {
               maxAge: 3600000 * 24 * 7,
               sameSite: 'none',
               secure: true,
+              domain: 'localhost',
               path: '/',
             })
             .send({ message: 'Авторизация успешна!' });
