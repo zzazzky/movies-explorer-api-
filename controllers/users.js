@@ -72,12 +72,6 @@ const login = (req, res, next) => {
             secure: true,
             path: '/',
           })
-            .cookie('authorized', true, {
-              maxAge: 3600000 * 24 * 7,
-              sameSite: 'none',
-              secure: true,
-              path: '/',
-            })
             .send({ message: 'Авторизация успешна!' });
         })
         .catch(next);
@@ -87,10 +81,11 @@ const login = (req, res, next) => {
 
 const logout = (req, res) => {
   res.clearCookie('token', {
+    maxAge: 3600000 * 24 * 7,
     httpOnly: true,
     sameSite: 'none',
     secure: true,
-    domain: 'localhost',
+    path: '/',
   }).send({ message: 'Вы успешно вышли из аккаунта, мы будем ждать вашего возвращения!' });
 };
 
