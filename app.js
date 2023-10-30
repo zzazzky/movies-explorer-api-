@@ -1,22 +1,24 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
-const { errors } = require('celebrate');
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
+const { errors } = require("celebrate");
 
-require('dotenv').config();
+require("dotenv").config();
 
-const router = require('./routes');
-const limiter = require('./middlewares/ratelimiter');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { cors } = require('./middlewares/cors');
-const { errorHandler } = require('./utils/errorhandler');
+const router = require("./routes");
+const limiter = require("./middlewares/ratelimiter");
+const { requestLogger, errorLogger } = require("./middlewares/logger");
+const { cors } = require("./middlewares/cors");
+const { errorHandler } = require("./utils/errorhandler");
 
-const { PORT = 3000, DATA_BASE, NODE_ENV } = process.env;
+const { PORT = 3001, DATA_BASE, NODE_ENV } = process.env;
 
 const app = express();
 
-mongoose.set('strictQuery', true);
-mongoose.connect(NODE_ENV === 'production' ? DATA_BASE : 'mongodb://localhost:27017/bitfilmsdb');
+mongoose.set("strictQuery", true);
+mongoose.connect(
+  NODE_ENV === "production" ? DATA_BASE : "mongodb://localhost:27017/bitfilmsdb"
+);
 
 app.use(requestLogger);
 app.use(limiter);
